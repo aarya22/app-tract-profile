@@ -31,8 +31,8 @@ def main():
         os.makedirs(path)
         
     for t in os.listdir(config['tracks']):
-        if t.endswith('.trk'):
-            t_str = aus.read_trk(t)
+        if t.endswith('.tck'):
+            t_str = nib.streamlines.load(t)
             fig, ax = plt.subplots(1)
             profile = seg.calculate_tract_profile(FA_data, t_str)
             ax.plot(profile)
