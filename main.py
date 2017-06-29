@@ -25,6 +25,11 @@ def main():
     FA_img = nib.load(dti_params['FA'])
     FA_data = FA_img.get_data()
     print("Extracting tract profiles...")
+    
+    path = os.getcwd() + '/profile/'
+    if not os.path.exists(path):
+        os.makedirs(path)
+        
     for t in os.listdir(config['tracks']):
         if t.endswith('.trk'):
             t_str = aus.read_trk(t)
@@ -32,7 +37,6 @@ def main():
             profile = seg.calculate_tract_profile(FA_data, t_str)
             ax.plot(profile)
             ax.set_title(t)
-            path = os.getcwd() + '/tract/'
             fname = t + '.png'
             plt.savefig(path+fname)
 main()
