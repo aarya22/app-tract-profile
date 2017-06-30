@@ -6,6 +6,7 @@ import os
 import AFQ.utils.streamlines as aus
 import AFQ.dti as dti
 import nibabel as nib
+import numpy as np
 
 
 def main():
@@ -15,6 +16,7 @@ def main():
     data_file = str(config['data_file'])
     data_bval = str(config['data_bval'])
     data_bvec = str(config['data_bvec'])
+    tracks = str(config['tracks'])
 
     print("Calculating DTI...")
     if not os.path.exists('./dti_FA.nii.gz'):
@@ -29,12 +31,13 @@ def main():
     path = os.getcwd() + '/profile/'
     if not os.path.exists(path):
         os.makedirs(path)
-        
-    for t in os.listdir(config['tracks']):
+
+    for t in os.listdir(tracks):
         if t.endswith('.tck'):
-            t_str = nib.streamlines.load(t)
+            tg = nib.streamlines.load(tracks+t)
+	    streamlines = list(tg.streamlines)
             fig, ax = plt.subplots(1)
-            profile = seg.calculate_tract_profile(FA_data, t_str)
+            profile = seg.calculate_tract_profile(FA_data, streamlines)
             ax.plot(profile)
             ax.set_title(t)
             fname = t + '.png'
