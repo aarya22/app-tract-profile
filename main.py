@@ -1,13 +1,7 @@
-import nibabel as nib
-import matplotlib.pyplot as plt
-import json
-import AFQ.segmentation as seg
-import os
 import AFQ.utils.streamlines as aus
 import AFQ.dti as dti
 import nibabel as nib
-import numpy as np
-
+import codecs
 
 def main():
     with open('config.json') as config_json:
@@ -27,19 +21,19 @@ def main():
     FA_img = nib.load(dti_params['FA'])
     FA_data = FA_img.get_data()
     print("Extracting tract profiles...")
-    
+
     path = os.getcwd() + '/profile/'
     if not os.path.exists(path):
         os.makedirs(path)
 
     for t in os.listdir(tracks):
         if t.endswith('.tck'):
-            tg = nib.streamlines.load(tracks+t)
-	    streamlines = list(tg.streamlines)
-            fig, ax = plt.subplots(1)
+            tg = nib.streamlines.load(tracks+'/'+t)
+            streamlines = list(tg.streamlines)
             profile = seg.calculate_tract_profile(FA_data, streamlines)
-            ax.plot(profile)
-            ax.set_title(t)
-            fname = t + '.png'
-            plt.savefig(path+fname)
+            profile = profile.tolist()
+            t = os.path.splitext(os.path.basename(t))[0] #remove the .tck from string
+            p = path+'/'+t+'.json'
+            json.dump(profile, codecs.open(p, 'w', encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4)
+
 main()
