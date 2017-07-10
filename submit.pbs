@@ -20,7 +20,7 @@ if [ $ENV == "IUHPC" ]; then
 		module load anaconda/python2.7
 	fi
 
-	export PYTHONPATH=$PYTHONPATH:/N/u/aryaam/Karst/github_repos/dipy
+	export PYTHONPATH=$PYTHONPATH:/N/u/aryaam/Karst/dipy
 	export PYTHONPATH=$PYTHONPATH:/N/u/aryaam/Karst/github_repos/nibabel
 	export PYTHONPATH=$PYTHONPATH:/N/u/aryaam/Karst/github_repos/pyAFQ
 fi
@@ -41,10 +41,11 @@ if [ $ret -ne 0 ]; then
     exit $ret
 fi
 
-if [ -s CST_L.png ];
-then
+count=$(ls profile/*.png | wc -l)
+if [ $count -eq 4 ];
+then 
 	echo 0 > finished
-else
+else 
 	echo "files missing"
 	echo 1 > finished
 	exit 1
