@@ -2,6 +2,9 @@ import AFQ.utils.streamlines as aus
 import AFQ.dti as dti
 import nibabel as nib
 import codecs
+import json
+import os
+import AFQ.segmentation as seg
 
 def main():
     with open('config.json') as config_json:
