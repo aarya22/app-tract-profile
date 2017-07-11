@@ -13,7 +13,7 @@ def main():
     data_file = str(config['data_file'])
     data_bval = str(config['data_bval'])
     data_bvec = str(config['data_bvec'])
-    tracks = str(config['tracks'])
+    tracks = str(config['tck_data'])
 
     print("Calculating DTI...")
     if not os.path.exists('./dti_FA.nii.gz'):
