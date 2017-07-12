@@ -28,7 +28,7 @@ def main():
     path = os.getcwd() + '/profile/'
     if not os.path.exists(path):
         os.makedirs(path)
-
+    """
     for t in os.listdir(tracks):
         if t.endswith('.tck'):
             tg = nib.streamlines.load(tracks+'/'+t)
@@ -38,5 +38,12 @@ def main():
             t = os.path.splitext(os.path.basename(t))[0] #remove the .tck from string
             p = path+'/'+t+'.json'
             json.dump(profile, codecs.open(p, 'w', encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4)
-
+    """
+    tg = nib.streamlines.load(tracks)
+    streamlines = list(tg.streamlines)
+    profile = seg.calculate_tract_profile(FA_data, streamlines)
+    profile = profile.tolist()
+    t = os.path.splitext(os.path.basename(tracks))[0] #remove the .tck from string
+    p = path+'/'+t+'.json'
+    json.dump(profile, codecs.open(p, 'w', encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4)
 main()
