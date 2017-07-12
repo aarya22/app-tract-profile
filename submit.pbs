@@ -44,8 +44,8 @@ if [ $ret -ne 0 ]; then
     exit $ret
 fi
 
-count=$(ls profile/*.png | wc -l)
-if [ $count -eq 4 ];
+count=$(ls profile/*.json | wc -l)
+if [ $count -eq 1 ];
 then 
 	echo 0 > finished
 else 
