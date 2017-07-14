@@ -37,6 +37,7 @@ fi
 echo "running main"
 
 #matlab -nodisplay -nosplash -r main
+env
 time python -u $SERVICE_DIR/main.py
 ret=$?
 if [ $ret -ne 0 ]; then
