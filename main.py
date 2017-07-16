@@ -31,7 +31,7 @@ def main():
         os.makedirs(path)
 
     tg = nib.streamlines.load(tracks)
-    streamlines = tg.streamlines
+    streamlines = list(tg.streamlines)
     profile = seg.calculate_tract_profile(FA_data, streamlines)
     profile = profile.tolist()
     t = os.path.splitext(os.path.basename(tracks))[0] #remove the .tck from string
