@@ -16,14 +16,15 @@ if [ $ENV == "IUHPC" ]; then
 		module unload python
 		module load anaconda2
 		
-		export PYTHONPATH=$PYTHONPATH:/N/u/aryaam/Karst/dipy
-		export PYTHONPATH=$PYTHONPATH:/N/u/aryaam/Karst/github_repos/nibabel
-		export PYTHONPATH=$PYTHONPATH:/N/u/aryaam/Karst/github_repos/pyAFQ
+		export PYTHONPATH=/N/u/aryaam/Karst/dipy:$PYTHONPATH
+		export PYTHONPATH=/N/u/aryaam/Karst/github_repos/nibabel:$PYTHONPATH
+		export PYTHONPATH=/N/u/aryaam/Karst/github_repos/pyAFQ:$PYTHONPATH
 	fi
 	if [ $HPC == "CARBONATE" ]; then
-		#deps > pip install dipy boto3 cloudpickle dask toolz 
-		export PYTHONPATH=$PYTHONPATH:/N/u/aryaam/Karst/github_repos/pyAFQ
-		export PYTHONPATH=$PYTHONPATH:/N/u/aryaam/Karst/github_repos/nibabel
+		#deps > pip install dipy nibabel boto3 cloudpickle dask toolz 
+		export PYTHONPATH=/N/u/aryaam/Karst/github_repos/pyAFQ:$PYTHONPATH
+		export PYTHONPATH=/N/u/aryaam/Karst/github_repos/nibabel:$PYTHONPATH
+		export PYTHONPATH=/N/u/brlife/Karst/git/dipy:$PYTHONPATH
 	fi
 fi
 
@@ -36,6 +37,7 @@ fi
 echo "running main"
 
 #matlab -nodisplay -nosplash -r main
+env
 time python -u $SERVICE_DIR/main.py
 ret=$?
 if [ $ret -ne 0 ]; then
@@ -44,8 +46,8 @@ if [ $ret -ne 0 ]; then
     exit $ret
 fi
 
-count=$(ls profile/*.png | wc -l)
-if [ $count -eq 4 ];
+count=$(ls profile/*.json | wc -l)
+if [ $count -eq 1 ];
 then 
 	echo 0 > finished
 else 
