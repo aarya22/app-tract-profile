@@ -5,6 +5,10 @@ import codecs
 import json
 import os
 import AFQ.segmentation as seg
+import matplotlib.pyplot as plt
+
+plt.switch_backend('agg')
+
 
 def main():
     with open('config.json') as config_json:
@@ -32,9 +36,13 @@ def main():
 
     tg = nib.streamlines.load(tracks)
     streamlines = list(tg.streamlines)
+    fig, ax = plt.subplots(1)
     profile = seg.calculate_tract_profile(FA_data, streamlines)
     profile = profile.tolist()
+    ax.plot(profile)
     t = os.path.splitext(os.path.basename(tracks))[0] #remove the .tck from string
+    ax.set_title(t)
+    plt.savefig(path+t+'.png')
     p = path+'/'+t+'.json'
     json.dump(profile, codecs.open(p, 'w', encoding='utf-8'), separators=(',', ':'), sort_keys=True, indent=4)
     
