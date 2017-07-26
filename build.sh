@@ -1,2 +1,2 @@
-docker build . -t app-tract-profile
+docker build . -t aarya22/app-tract-profile
 
