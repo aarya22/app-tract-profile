@@ -10,7 +10,7 @@ rm -f finished
 
 if [ $ENV == "SINGULARITY" ]; then
 cat <<EOT > _run.sh
-time singularity run /usr/local/images/brainlife_dipy-profile.img
+time singularity run /usr/local/images/brainlife_tract-profile.img
 #check for output files
 count=$(ls profile/*.json | wc -l)
 if [ $count -eq 1 ];
